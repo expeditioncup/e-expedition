@@ -1,8 +1,0 @@
-#!/usr/bin/env xdg-open
-[Desktop Entry]
-Name=Return to Gaming Mode
-Exec=/usr/bin/return-to-gamemode
-Icon=steamdeck-gaming-return
-Terminal=false
-Type=Application
-StartupNotify=false
