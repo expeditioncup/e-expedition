@@ -5,7 +5,7 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
    Pegue os dois valores em: Supabase > Project Settings > API.
    A chave "anon" é pública de propósito — quem protege os dados é o RLS.
    ===================================================================== */
-const SUPABASE_URL      = "https://avdsqrbjtlwdinnskwuj.supabase.co/rest/v1/";
+const SUPABASE_URL      = "https://avdsqrbjtlwdinnskwuj.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF2ZHNxcmJqdGx3ZGlubnNrd3VqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk4MTQ2NzUsImV4cCI6MjEwNTM5MDY3NX0.BLsoIcJqa3b7NmaJ_HMWUKgpK0yojgCbqM_2l3O2dY0";
 
 const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
