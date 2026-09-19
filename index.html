@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>e-Expedition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ================= LOGIN ================= -->
+<main id="tela-login" class="login" hidden>
+  <div class="login-caixa">
+    <h1 class="marca">e-Expedition</h1>
+    <p class="marca-sub">Campeonato de FIFA da turma</p>
+
+    <div id="convite-aviso" class="aviso" hidden></div>
+
+    <div class="abas-login">
+      <button class="aba-login ativa" data-modo="entrar">Entrar</button>
+      <button class="aba-login" data-modo="criar">Criar conta</button>
+    </div>
+
+    <form id="form-auth" class="form">
+      <label>Nome
+        <input name="nome" type="text" autocomplete="nickname" placeholder="Como a galera te chama">
+      </label>
+      <label>E-mail
+        <input name="email" type="email" required autocomplete="email">
+      </label>
+      <label>Senha
+        <input name="senha" type="password" required minlength="6" autocomplete="current-password">
+      </label>
+      <button class="btn-principal" type="submit">Entrar</button>
+    </form>
+
+    <p id="erro-auth" class="erro" hidden></p>
+  </div>
+</main>
+
+<!-- ================= APP ================= -->
+<div id="app" hidden>
+  <header class="topo">
+    <div class="topo-marca">
+      <span class="marca-pequena">e-Expedition</span>
+      <select id="seletor-campeonato" class="seletor" aria-label="Campeonato"></select>
+    </div>
+    <nav class="abas">
+      <button class="aba ativa" data-tela="tabela">Tabela</button>
+      <button class="aba" data-tela="jogos">Jogos</button>
+      <button class="aba" data-tela="perfil">Perfil</button>
+      <button class="aba" data-tela="admin" id="aba-admin" hidden>Admin</button>
+    </nav>
+    <button id="btn-sair" class="btn-texto">Sair</button>
+  </header>
+
+  <!-- ---------- TABELA ---------- -->
+  <section id="tela-tabela" class="tela">
+    <div class="tabela-cabecalho">
+      <h2>Classificação</h2>
+      <span id="resumo-campeonato" class="resumo"></span>
+    </div>
+    <div id="abas-fase-tabela" class="filtros" hidden></div>
+    <div id="campeao-aviso" class="aviso" hidden></div>
+    <div id="classificacao"></div>
+  </section>
+
+  <!-- ---------- JOGOS ---------- -->
+  <section id="tela-jogos" class="tela" hidden>
+    <div class="tabela-cabecalho">
+      <h2>Jogos</h2>
+      <div class="filtros">
+        <button class="chip ativa" data-filtro="todos">Todos</button>
+        <button class="chip" data-filtro="meus">Meus jogos</button>
+        <button class="chip" data-filtro="pendentes">A jogar</button>
+      </div>
+    </div>
+    <div id="abas-fase-jogos" class="filtros" hidden></div>
+    <div id="lista-jogos"></div>
+  </section>
+
+  <!-- ---------- PERFIL ---------- -->
+  <section id="tela-perfil" class="tela" hidden>
+    <h2>Seu perfil</h2>
+    <div id="cartao-perfil" class="cartao"></div>
+    <form id="form-perfil" class="form form-linha">
+      <label>Nome <input name="nome" type="text" required></label>
+      <label>Time preferido <input name="time" type="text" placeholder="Ex: Palmeiras"></label>
+      <button class="btn-principal" type="submit">Salvar alterações</button>
+    </form>
+    <p id="ok-perfil" class="ok" hidden>Perfil salvo.</p>
+  </section>
+
+  <!-- ---------- ADMIN ---------- -->
+  <section id="tela-admin" class="tela" hidden>
+    <h2>Administração</h2>
+
+    <div class="painel">
+      <h3>Criar campeonato</h3>
+      <form id="form-campeonato" class="form">
+        <label>Nome <input name="nome" type="text" required placeholder="e-Expedition 2026"></label>
+
+        <label>Formato
+          <select name="formato" id="campo-formato">
+            <option value="liga">Pontos corridos</option>
+            <option value="mata_mata">Mata-mata</option>
+            <option value="grupos_mata_mata">Grupos + mata-mata</option>
+            <option value="apertura_clausura">Apertura e Clausura</option>
+          </select>
+        </label>
+
+        <div id="opcoes-liga" class="form-linha">
+          <label class="checkbox"><input name="returno" type="checkbox"> Turno e returno</label>
+        </div>
+
+        <div id="opcoes-mata-mata" class="form-linha" hidden>
+          <label class="checkbox"><input name="ida_volta" type="checkbox"> Ida e volta em cada fase</label>
+        </div>
+
+        <div id="opcoes-grupos" class="form-linha" hidden>
+          <label>Número de grupos <input name="num_grupos" type="number" min="2" max="8" value="2"></label>
+          <label>Classificados por grupo <input name="classificados_por_grupo" type="number" min="1" max="4" value="2"></label>
+          <label class="checkbox"><input name="ida_volta_mm" type="checkbox"> Mata-mata em ida e volta</label>
+        </div>
+
+        <button class="btn-principal" type="submit">Criar campeonato</button>
+      </form>
+    </div>
+
+    <div class="painel">
+      <h3>Participantes</h3>
+      <p class="dica">Escolha quem disputa <strong id="nome-campeonato-admin">este campeonato</strong>.</p>
+      <div id="lista-participantes" class="grade-participantes"></div>
+    </div>
+
+    <div id="painel-grupos" class="painel" hidden>
+      <h3>Grupos</h3>
+      <p class="dica">Distribui os participantes marcados acima em grupos, sorteando aleatoriamente.</p>
+      <button id="btn-distribuir-grupos" class="btn-principal">Sortear grupos</button>
+      <div id="grade-grupos" class="grade-participantes"></div>
+    </div>
+
+    <div class="painel">
+      <h3 id="titulo-gerar">Tabela de jogos</h3>
+      <p id="dica-gerar" class="dica">Gera todos os confrontos de uma vez. Apaga os jogos existentes deste campeonato.</p>
+      <button id="btn-gerar" class="btn-principal">Gerar confrontos</button>
+      <button id="btn-gerar-mata-mata" class="btn-principal" hidden>Gerar mata-mata com os classificados</button>
+      <button id="btn-gerar-final" class="btn-principal" hidden>Gerar grande final</button>
+      <span id="status-gerar" class="dica"></span>
+    </div>
+
+    <div class="painel">
+      <h3>Lançar placares</h3>
+      <div id="admin-jogos"></div>
+    </div>
+
+    <div class="painel">
+      <h3>Convite por QR Code</h3>
+      <p class="dica">Gera um link válido por 7 dias. Quem escanear cai direto no cadastro e já entra no campeonato.</p>
+      <button id="btn-convite" class="btn-principal">Gerar convite</button>
+      <div id="area-qr" hidden>
+        <div id="qr"></div>
+        <input id="link-convite" class="link-convite" readonly>
+        <button id="btn-copiar" class="btn-texto">Copiar link</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="carregando" class="carregando">Carregando…</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script type="module" src="app.js"></script>
+</body>
+</html>
